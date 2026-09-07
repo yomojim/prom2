@@ -1,0 +1,180 @@
+
+Introducción a Markdown
+
+Markdown es un lenguaje de marcado ligero creado por John Gruber en 2004. Su propósito principal es facilitar la
+escritura y lectura de textos con formato en documentos digitales utilizando una sintaxis de texto plano muy
+sencilla. Permite aplicar estilos como negritas, cursivas, listas, enlaces, tablas y bloques de código sin recurrir a
+etiquetas HTML complejas. Sus archivos se guardan habitualmente con la extensión .md (como los archivos 
+README.md en repositorios de GitHub) y son interpretados de forma automática por múltiples plataformas para
+mostrarse visualmente formateados. 
+
+
+GIT: Control de Versiones
+
+1. ¿Qué es un repositorio en Git y cómo se diferencia de un proyecto "normal"?
+
+Un repositorio en Git es una base de datos especializada que registra de forma íntegra todo el historial de
+cambios, versiones y metadatos de un proyecto mediante una carpeta interna oculta llamada .git. A diferencia
+de un proyecto convencional (que es únicamente una carpeta con archivos actuales), el repositorio permite
+consultar el historial evolutivo, comparar versiones pasadas, trabajar en paralelo mediante ramas y recuperar
+información ante errores. 
+
+
+2. ¿Cuáles son las tres áreas principales de Git y qué papel cumple cada una?
+
+Working Directory (Directorio de trabajo): Carpeta física del equipo donde se editan, crean o eliminan los
+archivos del proyecto.
+
+Staging Area / Index (Área de preparación): Espacio intermedio (o borrador) donde se seleccionan y
+agrupan los cambios específicos que se incluirán en la próxima confirmación.
+
+Repository (Repositorio): Almacenamiento definitivo y seguro donde se guardan permanentemente los
+commits confirmados junto con su historial.
+
+
+3. ¿Cómo representa Git los cambios internamente? (objetos blob, tree, commit y tag)
+Blob Almacena únicamente el contenido bruto (texto o datos) de un archivo, sin incluir nombres ni rutas.
+
+Tree Representa un directorio o carpeta, conteniendo las referencias a archivos (blobs) y a otros
+subdirectorios (trees).
+
+Commit Objeto que apunta al árbol raíz del proyecto en un instante dado, registrando además el autor,
+mensaje descriptivo y commits padres.
+
+Tag Etiqueta estática o marcador permanente que apunta a un commit específico, útil para identificar
+versiones estables (ej. v1.0).
+
+4. ¿Cómo se crea un commit y qué información almacena un objeto commit?
+
+Se crea añadiendo primero los archivos modificados al área de preparación con git add <archivo> y
+ejecutando después git commit -m "Mensaje descriptivo". Almacena: (1) Un puntero al objeto tree
+principal, (2) Las referencias de los commits padres, (3) Nombre y correo del autor/confirmador, (4) Marca de
+tiempo (timestamp) y (5) El mensaje explicativo.
+
+
+5. ¿Cuál es la diferencia entre git pull y git fetch?
+git fetch descarga las últimas actualizaciones y ramas del repositorio remoto a tu entorno local pero no altera
+tu directorio de trabajo ni archivos actuales. En cambio, git pull ejecuta un fetch y además realiza de forma
+automática un git merge para integrar dichos cambios en tu rama local activa.
+
+
+6. ¿Qué es un branch (rama) en Git y cómo Git gestiona los punteros a commits?
+Una rama es una línea de desarrollo independiente que permite trabajar en nuevas características o correcciones
+sin afectar la rama principal (como main). Git gestiona las ramas como punteros ligeros y móviles que apuntan
+a un commit específico; al crear un nuevo commit, el puntero avanza de forma automática, mientras que el
+puntero especial HEAD indica la ubicación actual del usuario.
+
+
+7. ¿Cómo se realiza un merge y qué conflictos pueden surgir? ¿Cómo se resuelven?
+Se realiza posicionándose en la rama receptora y ejecutando git merge <nombre-rama>. Los conflictos
+surgen cuando dos ramas modifican las mismas líneas de un archivo de forma diferente; se resuelven abriendo el
+archivo editado manualmente para conservar el código deseado, marcándolo después con git add y creando
+un commit de fusión. 
+
+
+8. ¿Cómo funciona el área de staging (git add) y qué pasa si omito este paso?
+git add toma una captura actual de los archivos seleccionados y los registra en el área de preparación para
+empaquetarlos ordenadamente. Si se omite, al ejecutar git commit Git ignorará dichos cambios y advertirá que
+no existen modificaciones preparadas para confirmar. 
+
+9. ¿Qué es el archivo .gitignore y cómo influye en el seguimiento de archivos?
+Es un archivo de texto plano donde se especifican nombres o extensiones de archivos y carpetas que no deben
+ser rastreados ni subidos al repositorio (como cachés, credenciales o directorios de compilación). Influye
+haciendo que Git los ignore de forma silenciosa.
+
+
+10. ¿Cuál es la diferencia entre un "commit amend" (--amend) y un nuevo commit?
+Un nuevo commit añade un registro completamente adicional al historial. Por el contrario, git commit -
+amend modifica el último commit realizado, permitiendo ajustar su mensaje o incluir archivos olvidados
+fusionándolos en un solo registro. 
+
+
+
+11. ¿Cómo se utiliza git stash y en qué escenarios es útil?
+Se emplea con el comando git stash para almacenar temporalmente los cambios locales sin necesidad de
+hacer commit, dejando el directorio limpio. Es útil cuando se requiere cambiar urgentemente de rama en medio
+de una tarea incompleta. 
+
+
+12. ¿Qué mecanismos ofrece Git para deshacer cambios (reset, revert, checkout)?
+
+git reset: Mueve el puntero de la rama hacia atrás a un commit previo (puede conservar o descartar los
+cambios locales).
+
+
+git revert: Genera un nuevo commit que invierte los cambios de un commit anterior de forma segura para
+repositorios compartidos.
+
+
+git checkout (o git restore): Descarta cambios locales no guardados en archivos o cambia de rama/
+commit.
+
+
+13. ¿Cómo funciona la configuración de remotos (origin, upstream) y qué comandos uso para forks?
+origin representa tu copia remota principal en GitHub, mientras que upstream hace referencia habitual al
+repositorio original del cual hiciste el fork. Para gestionarlo se clona tu fork (git clone <url>), se agrega el
+original con git remote add upstream <url> y se sincroniza usando git fetch upstream y git
+merge upstream/main. 
+
+
+14. ¿Cómo puedo inspeccionar el historial de commits (log, diff, show)?
+git log: Muestra la lista cronológica completa de commits y metadatos.
+git diff: Compara las diferencias exactas línea por línea entre el working directory y el último commit.
+git show: Presenta los detalles profundos y los cambios de código introducidos en un commit específico.
+
+
+15. ¿Cuáles son los tipos de datos primitivos en Java?
+Se dividen en cuatro categorías: Enteros (byte, short, int, long), Decimales (float, double), Carácter
+(char para un único símbolo Unicode) y Boleano (boolean para valores lógicos true / false). 
+
+
+16. ¿Cómo funcionan las estructuras de control de flujo en Java?
+
+
+if / else: Evalúan condiciones booleanas para bifurcar la ejecución del código.
+
+switch: Compara una expresión contra múltiples casos específicos de manera estructurada.
+
+Bucles (for, while, do-while): Repiten bloques de código iterativamente bajo condiciones determinadas.
+
+17. ¿Por qué es importante usar nombres significativos para variables y métodos?
+
+
+Porque maximizan la legibilidad y el mantenimiento del software. Nombres descriptivos permiten que cualquier
+desarrollador comprenda instantáneamente el propósito del código sin requerir un análisis exhaustivo de su
+lógica interna. 
+
+
+18. ¿Qué es la Programación Orientada a Objetos (POO)?
+Es un paradigma que organiza el software en objetos, los cuales combinan datos (atributos) y comportamientos
+(métodos) para modelar entidades del mundo real de forma modular, escalable y reutilizable. 
+
+
+19. ¿Cuáles son los cuatro pilares de la Programación Orientada a Objetos?
+
+Encapsulamiento: Ocultamiento del estado interno mediante acceso controlado por métodos públicos.
+
+Herencia: Mecanismo para reutilizar código compartiendo atributos y métodos entre clases jerárquicas.
+
+Polimorfismo: Capacidad de que diferentes objetos respondan de manera distinta ante una misma acción.
+
+Abstracción: Aislamiento de los aspectos conceptuales relevantes ignorando detalles internos innecesarios.
+
+
+20. ¿Qué es la herencia en POO y cómo se utiliza en Java?
+
+
+Es la capacidad de crear una nueva clase basada en otra existente para heredar su estructura y ampliarla. En
+Java se implementa mediante la palabra reservada extends (ej. public class Perro extends Animal).
+
+
+21. ¿Qué son los modificadores de acceso y cuáles son los más comunes en Java?
+Son palabras reservadas que controlan la visibilidad de clases, métodos y atributos. Los principales son: public
+(acceso universal), private (restringido a la propia clase), protected (accesible en paquetes y subclases) y el
+modificador por defecto (package-private). 
+
+22. ¿Qué es una variable de entorno y por qué son importantes para Java o la programación?
+
+Es un valor dinámico externo al código fuente gestionado por el sistema operativo. Su importancia radica en
+permitir la configuración segura de parámetros del sistema, credenciales o rutas críticas (como JAVA_HOME) sin
+necesidad de exponerlos directamente en el código fuente. 
